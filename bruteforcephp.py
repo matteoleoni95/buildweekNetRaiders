@@ -3,8 +3,8 @@ import requests
 
 #si aprono i file esterni contenenti usernames e passwords più usati. viene messo cosi e non con tutto il path perchè si trovano nella stessa cartella di questo script
 
-user_file = open('usernames.lst')
-pass_file = open('passwords.lst')
+user_file = open('/usr/share/nmap/nselib/data/usernames.lst')
+pass_file = open('/usr/share/nmap/nselib/data/passwords.lst')
 
 #viene letta ogni riga dei file, senza spazi e punteggiatura
 user_list = user_file.readlines()
