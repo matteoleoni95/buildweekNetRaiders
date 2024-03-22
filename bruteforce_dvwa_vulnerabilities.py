@@ -2,8 +2,8 @@ import requests
 import sys
 
 #si aprono i file esterni contenenti usernames e passwords più usati. viene messo cosi e non con tutto il path perchè si trovano nella stessa cartella di questo script
-user_file = open('usernames.lst')
-pass_file = open('passwords.lst')  
+user_file = open('/usr/share/nmap/nselib/data/usernames.lst')
+pass_file = open('/usr/share/nmap/nselib/data/passwords.lst')  
 
 #apre il file cookie.txt, precedentemente creato dal bruteforce_dvwa, per avere il phpsessid e poter accedere con gli stessi cookie
 sessid_file = open('phpsessid.txt')
