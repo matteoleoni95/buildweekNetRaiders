@@ -1,4 +1,4 @@
-Per la presentazione finale, non fanno parte i file PresentazioneGiorno..... in quanto sono le presentazioni giornaliere effettuate dal lunedi al giovedi sono presentazioni parziali. 
+Per la presentazione finale, non fanno parte i file "PresentazioneGiorno....." in quanto sono le presentazioni giornaliere effettuate dal lunedi al giovedi sono presentazioni parziali. 
 
 
 presentazione slide: NETRAIDERSBW.pdf
